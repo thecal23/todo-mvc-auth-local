@@ -5,6 +5,18 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  address: {
+    type: String,
+    required: true,
+  },
+  payment: {
+    type: String,
+    required: true
+  },
+  total: {
+    type: Number,
+    required: true,
+  },
   completed: {
     type: Boolean,
     required: true,
