@@ -17,7 +17,6 @@ module.exports = {
             console.log('Todo has been added!')
             console.log(req.body)
             res.redirect('/todos')
-            console.log(req.body)
         }catch(err){
             console.log(err)
         }
