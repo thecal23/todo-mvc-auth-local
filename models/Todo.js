@@ -9,10 +9,10 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // payment: {
-  //   type: String,
-  //   required: true,
-  // },
+  paymentType: {
+    type: String,
+    required: true,
+  },
   total: {
     type: Number,
     required: true,
