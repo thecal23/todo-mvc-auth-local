@@ -6,7 +6,23 @@ module.exports = {
         try{
             const todoItems = await Todo.find({userId:req.user.id})
             const itemsLeft = await Todo.countDocuments({userId:req.user.id,completed: false})
-            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user})
+            let cash = 0 
+            let debit = 0
+            let mastercard = 0 
+            let visa = 0 
+            for(let i = 0; i < todoItems.length; i++){
+                if(todoItems[i].paymentType === 'Cash'){
+                    cash += todoItems[i].total
+                } else if(todoItems[i].paymentType === 'Debit'){
+                    debit += todoItems[i].total
+                }  else if(todoItems[i].paymentType === 'Visa'){
+                    visa += todoItems[i].total
+                } else if(todoItems[i].paymentType === 'MasterCard'){
+                    mastercard += todoItems[i].total
+                } 
+                
+            }
+            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user, cash:cash, debit:debit , visa: visa, mastercard: mastercard})
         }catch(err){
             console.log(err)
         }
@@ -16,6 +32,7 @@ module.exports = {
             await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType})
             console.log('Todo has been added!')
             console.log(req.body)
+            
             res.redirect('/todos')
         }catch(err){
             console.log(err)

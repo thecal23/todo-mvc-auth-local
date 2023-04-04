@@ -2,6 +2,12 @@ h1{
     color: red;
     font-size: 2.5em;
 }
+
+h2{
+    color: green;
+    font-size: 2.5em;
+}
+
 .completed{
     text-decoration: line-through;
     color: gray;
