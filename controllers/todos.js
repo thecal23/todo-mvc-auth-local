@@ -12,8 +12,8 @@ module.exports = {
         console.log('getTodosReq',req.query.date)
         console.log(req.user)
         try{
-            const todoItems = await Todo.find({userId:req.user.id})
-            const itemsLeft = await Todo.countDocuments({userId:req.user.id,completed: false})
+            const todoItems = await Todo.find({userId:req.user.id, date: queryDate})
+            const itemsLeft = await Todo.countDocuments({userId:req.user.id,completed: false, date: queryDate})
             let cash = 0 
             let debit = 0
             let mastercard = 0 
@@ -38,12 +38,12 @@ module.exports = {
     },
     createTodo: async (req, res)=>{
         try{
-            await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType/* , date: req.body.date */})
+            await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType, date: req.body.date})
             console.log('Todo has been added!')
             console.log(req.body)
             console.log(req.query)
             
-            res.redirect(`/todos`) /* ?date=${req.body.date} */
+            res.redirect(`/todos?date=${req.body.date}`) /* ?date=${req.body.date} */
         }catch(err){
             console.log(err)
         }

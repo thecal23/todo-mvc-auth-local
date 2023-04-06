@@ -23,7 +23,9 @@ Array.from(dateSelect).forEach((el)=>{
 
 async function selectDate(e){
     console.log(e.target.value)
+    
     location.search = `?date=${e.target.value}`
+    
 }
 
 async function deleteTodo(){

@@ -25,10 +25,10 @@ const TodoSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  /* date: {
+  date: {
     type: String,
     required: true
-  } */
+  }
 })
 
 module.exports = mongoose.model('Todo', TodoSchema)
