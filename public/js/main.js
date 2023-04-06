@@ -1,6 +1,7 @@
 const deleteBtn = document.querySelectorAll('.del')
 const todoItem = document.querySelectorAll('span.not')
 const todoComplete = document.querySelectorAll('span.completed')
+const dateSelect = document.querySelectorAll(".dateSelect")
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -13,6 +14,17 @@ Array.from(todoItem).forEach((el)=>{
 Array.from(todoComplete).forEach((el)=>{
     el.addEventListener('click', markIncomplete)
 })
+
+Array.from(dateSelect).forEach((el)=>{
+    el.addEventListener('change', selectDate)
+})
+
+
+
+async function selectDate(e){
+    console.log(e.target.value)
+    location.search = `?date=${e.target.value}`
+}
 
 async function deleteTodo(){
     const todoId = this.parentNode.dataset.id

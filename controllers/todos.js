@@ -2,6 +2,14 @@ const Todo = require('../models/Todo')
 
 module.exports = {
     getTodos: async (req,res)=>{
+        console.log('beforeIfstatement',req.query.date)
+        queryDate = req.query.date
+        if(queryDate === undefined){
+            let currentDate = new Date().toJSON().slice(0, 10);
+            queryDate = currentDate
+        }
+        
+        console.log('getTodosReq',req.query.date)
         console.log(req.user)
         try{
             const todoItems = await Todo.find({userId:req.user.id})
@@ -19,21 +27,23 @@ module.exports = {
                     visa += todoItems[i].total
                 } else if(todoItems[i].paymentType === 'MasterCard'){
                     mastercard += todoItems[i].total
-                } 
-                
+                }     
             }
-            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user, cash:cash, debit:debit , visa: visa, mastercard: mastercard})
+            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user, cash:cash, debit:debit , visa: visa, mastercard: mastercard, date: queryDate})
+            location.search = `?date=${queryDate}`
+
         }catch(err){
             console.log(err)
         }
     },
     createTodo: async (req, res)=>{
         try{
-            await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType, date: req.body.date})
+            await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType/* , date: req.body.date */})
             console.log('Todo has been added!')
             console.log(req.body)
+            console.log(req.query)
             
-            res.redirect('/todos')
+            res.redirect(`/todos`) /* ?date=${req.body.date} */
         }catch(err){
             console.log(err)
         }
