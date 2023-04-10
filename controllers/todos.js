@@ -36,6 +36,23 @@ module.exports = {
             console.log(err)
         }
     },
+    searchTodo: async (req,res) =>{
+        let currentDate = new Date().toJSON().slice(0, 10);
+
+        let searchName = req.query.search
+        console.log("search Todo",searchName)
+        console.log(req)
+
+        try{
+            const todoItems = await Todo.find({todo: searchName})
+            
+            res.render('search.ejs', {todos: todoItems, date: currentDate})
+            location.search = `?search=${searchName}`
+
+        }catch(err){
+            console.log(err)
+        }
+    },
     createTodo: async (req, res)=>{
         try{
             await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType, date: req.body.date})

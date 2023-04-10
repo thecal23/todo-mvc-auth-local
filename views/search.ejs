@@ -35,30 +35,8 @@
     <% }) %>    
     </ul>
     
-    <h2><%= user.userName %> has <%= left %> deliveries to do today.</h2>
-    <h2>Total sales today: <%=result%>$</h2>
-    <h3>Total Cash: <%=cash%>$</h3>
-    <h3>Total Debit: <%=debit%>$</h3>
-    <h3>Total Visa: <%=visa%>$</h3>
-    <h3>Total MasterCard: <%=mastercard%>$</h3>
-
-
-
-    <form action="/todos/createTodo" method='POST'>
-        <input type="text" placeholder="Full Name" name='todoItem'>
-        <input type="text" placeholder="Address" name="address">
-        <input type="number" placeholder="Total" name="total" step="0.01">
-        <input type="hidden" name="date" value='<%= date%>'>
-        <input type="checkbox" class="checkedbox" id="cash" name="paymentType" value="Cash">
-        <label for="cash">Cash</label>
-        <input type="checkbox" class="checkedbox" id="debit" name="paymentType" value="Debit" >
-        <label for="debit">Debit</label>
-        <input type="checkbox" class="checkedbox" id="visa" name="paymentType" value="Visa" >
-        <label for="debit">Visa</label>
-        <input type="checkbox" class="checkedbox" id="mastercard" name="paymentType" value="MasterCard" >
-        <label for="debit">MasterCard</label>
-        <input type="submit">
-    </form>
+    
+    
 
 
     <a href="/logout">Logout</a>
