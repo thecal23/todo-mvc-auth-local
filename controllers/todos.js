@@ -17,7 +17,8 @@ module.exports = {
             let cash = 0 
             let debit = 0
             let mastercard = 0 
-            let visa = 0 
+            let visa = 0
+            let totalSales = 0  
             for(let i = 0; i < todoItems.length; i++){
                 if(todoItems[i].paymentType === 'Cash'){
                     cash += todoItems[i].total
@@ -29,24 +30,28 @@ module.exports = {
                     mastercard += todoItems[i].total
                 }     
             }
-            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user, cash:cash, debit:debit , visa: visa, mastercard: mastercard, date: queryDate})
+            totalSales = cash + debit + visa + mastercard
+            res.render('todos.ejs', {todos: todoItems, left: itemsLeft, user: req.user, cash:cash, debit:debit , visa: visa, mastercard: mastercard, date: queryDate, result: totalSales})
             location.search = `?date=${queryDate}`
 
         }catch(err){
             console.log(err)
         }
     },
+    downloadCSV: async (req,res) => {
+        console.log(req.query)
+    },
     searchTodo: async (req,res) =>{
         let currentDate = new Date().toJSON().slice(0, 10);
 
         let searchName = req.query.search
         console.log("search Todo",searchName)
-        console.log(req)
-
+/*         console.log(req)
+ */
         try{
-            const todoItems = await Todo.find({todo: searchName})
+            const todoItems = await Todo.find({userId: req.user.id, todo: searchName})
             
-            res.render('search.ejs', {todos: todoItems, date: currentDate})
+            res.render('search.ejs', {todos: todoItems, date: currentDate, name: searchName})
             location.search = `?search=${searchName}`
 
         }catch(err){

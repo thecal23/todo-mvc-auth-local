@@ -5,7 +5,9 @@ const { ensureAuth } = require('../middleware/auth')
 
 router.get('/', ensureAuth, todosController.getTodos)
 
-router.get('/searchTodo', todosController.searchTodo)
+router.get('/searchTodo', ensureAuth, todosController.searchTodo)
+
+router.post('/downloadCSV', todosController.downloadCSV)
 
 router.post('/createTodo', todosController.createTodo)
 

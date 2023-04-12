@@ -2,6 +2,7 @@ const deleteBtn = document.querySelectorAll('.del')
 const todoItem = document.querySelectorAll('span.not')
 const todoComplete = document.querySelectorAll('span.completed')
 const dateSelect = document.querySelectorAll(".dateSelect")
+const searchDate = document.querySelectorAll(".searchDate")
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -19,8 +20,15 @@ Array.from(dateSelect).forEach((el)=>{
     el.addEventListener('change', selectDate)
 })
 
+Array.from(searchDate).forEach((el)=>{
+    el.addEventListener('change', dateSearch)
+})
 
+async function dateSearch(e){
+    console.log(e.target.value)
 
+    location.replace(`http://localhost:2121/todos?date=${e.target.value}`) 
+}
 
 async function selectDate(e){
     console.log(e.target.value)
@@ -32,7 +40,7 @@ async function selectDate(e){
 async function deleteTodo(){
     const todoId = this.parentNode.dataset.id
     try{
-        const response = await fetch('todos/deleteTodo', {
+        const response = await fetch('/todos/deleteTodo', {
             method: 'delete',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
@@ -50,7 +58,7 @@ async function deleteTodo(){
 async function markComplete(){
     const todoId = this.parentNode.dataset.id
     try{
-        const response = await fetch('todos/markComplete', {
+        const response = await fetch('/todos/markComplete', {
             method: 'put',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
@@ -68,7 +76,7 @@ async function markComplete(){
 async function markIncomplete(){
     const todoId = this.parentNode.dataset.id
     try{
-        const response = await fetch('todos/markIncomplete', {
+        const response = await fetch('/todos/markIncomplete', {
             method: 'put',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
