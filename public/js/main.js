@@ -3,9 +3,15 @@ const todoItem = document.querySelectorAll('span.not')
 const todoComplete = document.querySelectorAll('span.completed')
 const dateSelect = document.querySelectorAll(".dateSelect")
 const searchDate = document.querySelectorAll(".searchDate")
+const modifyBtn = document.querySelectorAll('.modify')
+const modifyPaymentType = document.querySelectorAll('.dropDown')
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
+})
+
+Array.from(modifyPaymentType).forEach((el)=>{
+    el.addEventListener('change', modifyTodo)
 })
 
 Array.from(todoItem).forEach((el)=>{
@@ -24,6 +30,8 @@ Array.from(searchDate).forEach((el)=>{
     el.addEventListener('change', dateSearch)
 })
 
+
+
 async function dateSearch(e){
     console.log(e.target.value)
 
@@ -35,6 +43,29 @@ async function selectDate(e){
     
     location.search = `?date=${e.target.value}`
     
+}
+
+async function modifyTodo(e){
+    const modifyId = this.parentNode.dataset.id
+    const modifiedPaymentType = e.target.value
+
+    console.log('modified',modifyId)
+    console.log(modifiedPaymentType)
+    try{
+        const response = await fetch('/todos/modifyTodo', {
+            method: 'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'todoIdFromJSFile': modifyId,
+                'modifiedPaymentType': modifiedPaymentType
+            })
+        })
+        const data = await response.json()
+        console.log(data)
+        location.reload()
+    }catch(err){
+        console.log(err)
+    }
 }
 
 async function deleteTodo(){

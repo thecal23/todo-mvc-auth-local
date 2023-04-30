@@ -16,8 +16,10 @@
         </form>
 
     <button onclick="window.print()">Print this page</button>
+
     <form action="/todos/downloadCSV" method="POST">
         <button>CSV Report</button>
+        <input type="hidden" name="date" value='<%= date%>'>
     </form>    
     
     <h1>Customers Orders </h1>
@@ -30,7 +32,14 @@
                 <span><%= el.total%>$</span>
                 <span><%= el.paymentType %></span>
                 <span><%= el.date%></span>
-                <span class='del'> Delete </span>
+                <button class='del'> Delete </button>
+                <select class="dropDown">
+                    <option value="">Modify Payment Type</option>
+                    <option value="Cash" <% if(selectedOption === 'Cash') { %> selected <% } %>>Cash</option>
+                    <option value="Debit" <% if(selectedOption === 'Debit') { %> selected <% } %>>Debit</option>
+                    <option value="Visa" <% if(selectedOption === 'Visa') { %> selected <% } %>>Visa</option>
+                    <option value="MasterCard" <% if(selectedOption === 'MasterCard') { %> selected <% } %>>MasterCard</option>
+                </select>
             </li>
     <% }) %>    
     </ul>
@@ -54,6 +63,15 @@
                     <td><%= el.paymentType %></td>
                     <td><%= el.date %></td>
                     <td class="del"> Delete</td>
+                    <td>
+                        <select class="dropDown">
+                            <option value="">Modify Payment Type</option>
+                            <option value="Cash" <% if(selectedOption === 'Cash') { %> selected <% } %>>Cash</option>
+                            <option value="Debit" <% if(selectedOption === 'Debit') { %> selected <% } %>>Debit</option>
+                            <option value="Visa" <% if(selectedOption === 'Visa') { %> selected <% } %>>Visa</option>
+                            <option value="MasterCard" <% if(selectedOption === 'MasterCard') { %> selected <% } %>>MasterCard</option>
+                        </select>
+                    </td>
                 </tr>
                 <% }) %>
             </tbody>

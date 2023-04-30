@@ -7,14 +7,16 @@ router.get('/', ensureAuth, todosController.getTodos)
 
 router.get('/searchTodo', ensureAuth, todosController.searchTodo)
 
-router.post('/downloadCSV', todosController.downloadCSV)
+router.post('/downloadCSV', ensureAuth, todosController.downloadCSV)
 
-router.post('/createTodo', todosController.createTodo)
+router.post('/createTodo', ensureAuth, todosController.createTodo)
 
-router.put('/markComplete', todosController.markComplete)
+router.put('/markComplete', ensureAuth, todosController.markComplete)
 
-router.put('/markIncomplete', todosController.markIncomplete)
+router.put('/markIncomplete', ensureAuth, todosController.markIncomplete)
 
-router.delete('/deleteTodo', todosController.deleteTodo)
+router.delete('/deleteTodo', ensureAuth, todosController.deleteTodo)
+
+router.put('/modifyTodo', ensureAuth, todosController.modifyTodo)
 
 module.exports = router
