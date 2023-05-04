@@ -46,7 +46,8 @@ async function selectDate(e){
 }
 
 async function modifyTodo(e){
-    const modifyId = this.parentNode.dataset.id
+    /* const modifyId = this.parentNode.dataset.id */
+    const modifyId = this.closest('[data-id]').dataset.id
     const modifiedPaymentType = e.target.value
 
     console.log('modified',modifyId)
