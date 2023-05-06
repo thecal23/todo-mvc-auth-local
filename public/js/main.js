@@ -5,6 +5,7 @@ const dateSelect = document.querySelectorAll(".dateSelect")
 const searchDate = document.querySelectorAll(".searchDate")
 const modifyBtn = document.querySelectorAll('.modify')
 const modifyPaymentType = document.querySelectorAll('.dropDown')
+const deliveryStatusElement = document.querySelectorAll('.deliveryStatus')
 
 Array.from(deleteBtn).forEach((el)=>{
     el.addEventListener('click', deleteTodo)
@@ -12,6 +13,10 @@ Array.from(deleteBtn).forEach((el)=>{
 
 Array.from(modifyPaymentType).forEach((el)=>{
     el.addEventListener('change', modifyTodo)
+})
+
+Array.from(deliveryStatusElement).forEach((el)=>{
+    el.addEventListener('click', statusUpdate)
 })
 
 Array.from(todoItem).forEach((el)=>{
@@ -30,7 +35,20 @@ Array.from(searchDate).forEach((el)=>{
     el.addEventListener('change', dateSearch)
 })
 
-
+let currentStatus = "Not Delivered"
+async function updateDeliveryStatus(e){
+    console.log(e.target.value)
+    if (currentStatus === 'Not Delivered') {
+        this.style.backgroundColor = '#00ff64';
+        this.textContent = "Delivered"
+        currentStatus = 'Delivered';
+      } else {
+        this.style.backgroundColor = '#ff0000';
+        this.textContent = 'Not Delivered'
+        currentStatus = 'Not Delivered';
+    }
+    
+}
 
 async function dateSearch(e){
     console.log(e.target.value)
@@ -77,6 +95,24 @@ async function deleteTodo(){
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
                 'todoIdFromJSFile': todoId
+            })
+        })
+        const data = await response.json()
+        console.log(data)
+        location.reload()
+    }catch(err){
+        console.log(err)
+    }
+}
+
+async function statusUpdate(){
+    const statusId = this.closest('[data-id]').dataset.id
+    try{
+        const response = await fetch('/todos/statusUpdate', {
+            method:'put',
+            headers: {'Content-type': 'application/json'},
+            body: JSON.stringify({
+                'statusIdFromJSFile': statusId
             })
         })
         const data = await response.json()

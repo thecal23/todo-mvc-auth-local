@@ -15,3 +15,7 @@ h2{
 .not{
     text-decoration: underline;
 }
+
+.deliveryStatus{
+	background-color:#ff0000;
+}

@@ -99,12 +99,23 @@ module.exports = {
     },
     createTodo: async (req, res)=>{
         try{
-            await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType, date: req.body.date})
+            await Todo.create({todo: req.body.todoItem, address: req.body.address, total: req.body.total, completed: false, userId: req.user.id, paymentType: req.body.paymentType, date: req.body.date, status: req.body.status})
             console.log('Todo has been added!')
             console.log(req.body)
             console.log(req.query)
             
             res.redirect(`/todos?date=${req.body.date}`) /* ?date=${req.body.date} */
+        }catch(err){
+            console.log(err)
+        }
+    },
+    statusUpdate: async (req,res)=>{
+        try{
+            await Todo.findOneAndUpdate({_id:req.body.statusIdFromJSFile},{
+                status: "Delivered"
+            })
+            console.log('Delivered')
+            res.json('Delivered')
         }catch(err){
             console.log(err)
         }

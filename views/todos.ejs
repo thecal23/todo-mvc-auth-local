@@ -48,6 +48,7 @@
         <input type="text" placeholder="Address" name="address">
         <input type="number" placeholder="Total" name="total" step="0.01">
         <input type="hidden" name="date" value='<%= date%>'>
+        <input type="hidden" name="status" value="Not Delivered">
         <input type="checkbox" class="checkedbox" id="cash" name="paymentType" value="Cash">
         <label for="cash">Cash</label>
         <input type="checkbox" class="checkedbox" id="debit" name="paymentType" value="Debit" >
@@ -90,7 +91,7 @@
                             <option value="MasterCard" <% if(selectedOption === 'MasterCard') { %> selected <% } %>>MasterCard</option>
                         </select>
                     </td>
-                    <td>Not Delivered</td>
+                    <td class="deliveryStatus"><%= el.status %></td>
                 </tr>
                 <% }) %>
             </tbody>

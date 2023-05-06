@@ -28,6 +28,10 @@ const TodoSchema = new mongoose.Schema({
   date: {
     type: String,
     required: true
+  },
+  status:{
+    type: String,
+    required: true
   }
 })
 
