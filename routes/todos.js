@@ -19,4 +19,7 @@ router.delete('/deleteTodo', ensureAuth, todosController.deleteTodo)
 
 router.put('/modifyTodo', ensureAuth, todosController.modifyTodo)
 
+router.put('/statusUpdate', ensureAuth, todosController.statusUpdate)
+
+
 module.exports = router

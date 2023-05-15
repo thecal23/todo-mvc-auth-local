@@ -112,14 +112,15 @@ module.exports = {
     statusUpdate: async (req,res)=>{
         try{
             await Todo.findOneAndUpdate({_id:req.body.statusIdFromJSFile},{
-                status: "Delivered"
+                status: req.body.newStatus
             })
-            console.log('Delivered')
-            res.json('Delivered')
+            console.log(req.body.newStatus)
+            res.json(req.body.newStatus)
         }catch(err){
             console.log(err)
         }
     },
+    
     markComplete: async (req, res)=>{
         try{
             await Todo.findOneAndUpdate({_id:req.body.todoIdFromJSFile},{

@@ -35,21 +35,6 @@ Array.from(searchDate).forEach((el)=>{
     el.addEventListener('change', dateSearch)
 })
 
-let currentStatus = "Not Delivered"
-async function updateDeliveryStatus(e){
-    console.log(e.target.value)
-    if (currentStatus === 'Not Delivered') {
-        this.style.backgroundColor = '#00ff64';
-        this.textContent = "Delivered"
-        currentStatus = 'Delivered';
-      } else {
-        this.style.backgroundColor = '#ff0000';
-        this.textContent = 'Not Delivered'
-        currentStatus = 'Not Delivered';
-    }
-    
-}
-
 async function dateSearch(e){
     console.log(e.target.value)
 
@@ -107,12 +92,22 @@ async function deleteTodo(){
 
 async function statusUpdate(){
     const statusId = this.closest('[data-id]').dataset.id
+    const statusElement = this.closest('.deliveryStatus');
+
+    let newStatus = '';
+    if (statusElement.textContent.trim() === 'Delivered') {
+        newStatus = 'Not Delivered';
+    } else {
+        newStatus = 'Delivered';
+    }
+
     try{
         const response = await fetch('/todos/statusUpdate', {
             method:'put',
             headers: {'Content-type': 'application/json'},
             body: JSON.stringify({
-                'statusIdFromJSFile': statusId
+                'statusIdFromJSFile': statusId,
+                'newStatus': newStatus
             })
         })
         const data = await response.json()
@@ -122,6 +117,8 @@ async function statusUpdate(){
         console.log(err)
     }
 }
+
+
 
 async function markComplete(){
     const todoId = this.parentNode.dataset.id
